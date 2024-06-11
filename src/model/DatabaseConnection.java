@@ -11,35 +11,12 @@ import java.sql.SQLException;
  *
  * @author marin
  */
-
 public class DatabaseConnection {
-    private static Connection conn = null;
-    private static final String url = "jdbc:mysql://localhost/GestordeTareas";
-    private static final String user = "root";
-    private static final String password = "marin";
+    private static final String URL = "jdbc:mysql://localhost:3306/gestordetareas";
+    private static final String USER = "root";
+    private static final String PASSWORD = "marin";
 
-    public static Connection getConnection() {
-        try {
-            if (conn == null || conn.isClosed()) {
-                // Load the JDBC driver
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                // Create the connection
-                conn = DriverManager.getConnection(url, user, password);
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }
-        return conn;
-    }
-
-    public static void closeConnection() {
-        try {
-            if (conn != null && !conn.isClosed()) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error al cerrar la conexión: " + ex.getMessage());
-        }
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
-
