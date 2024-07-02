@@ -4,7 +4,10 @@
  */
 package gestordetareas;
 
+import controller.LoginController;
 import controller.RegisterController;
+import controller.TareaController;
+import view.LoginView;
 import view.RegisterView;
 
 /**
@@ -14,10 +17,13 @@ import view.RegisterView;
 public class GestordeTareas {
     
     public static void main(String[] args) {
-        RegisterView view = new RegisterView();
-        RegisterController controller = new RegisterController(view);
-        view.setVisible(true);
+        
+        RegisterView registerView = new RegisterView();
+        RegisterController registerController = new RegisterController(registerView);
+       
+        registerView.setVisible(true);
+           
     }
     
-    
 }
+
