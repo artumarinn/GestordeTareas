@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS gestor_de_tareas;
-CREATE DATABASE IF NOT EXISTS gestor_de_tareas;
-USE gestor_de_tareas;
+DROP DATABASE IF EXISTS task_manager;
+CREATE DATABASE IF NOT EXISTS task_manager;
+USE task_manager;
 
 CREATE TABLE usuario (
 id INT PRIMARY KEY AUTO_INCREMENT,
