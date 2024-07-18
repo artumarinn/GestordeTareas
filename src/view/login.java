@@ -4,7 +4,7 @@
  */
 package view;
 
-import controller.ControllerLogin;
+import controller.LoginController;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -115,7 +115,7 @@ public class login extends javax.swing.JFrame {
         String usuario = txtUsuario.getText();
         String contraseña = new String(txtContraseña.getPassword());
 
-        ControllerLogin loginController = new ControllerLogin();
+        LoginController loginController = new LoginController();
         if (loginController.loginUser(usuario, contraseña)) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
             // Navegar a la pantalla del gestor de tareas

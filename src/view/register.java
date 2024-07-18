@@ -1,6 +1,6 @@
 package view;
 
-import controller.ControllerRegister;
+import controller.RegisterController;
 import javax.swing.JOptionPane;
 import model.user;
 
@@ -203,7 +203,7 @@ public class register extends javax.swing.JFrame {
       
 
         user User = new user(dni, nombre_completo, correo, usuario, contraseña);
-        ControllerRegister controller = new ControllerRegister();
+        RegisterController controller = new RegisterController();
     
         if (controller.registerUser(User)) {
             JOptionPane.showMessageDialog(this, "Usuario registrado con éxito");

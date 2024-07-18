@@ -4,33 +4,35 @@
  */
 package model;
 
-import java.util.Date;
 
 /**
  *
  * @author marin
  */
-public class Tarea {
+public class task {
     
     private int id;
     private String nombre;
     private String descripcion;
     private String estado;
     private String responsable;
-    private Date fechaLimite;
+    private String FechaLimite;
     private String prioridad;
 
-    public Tarea(int id, String nombre, String descripcion, String estado, String responsable, Date fechaLimite, String prioridad) {
+    public task(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.estado = estado;
         this.responsable = responsable;
-        this.fechaLimite = fechaLimite;
+        this.FechaLimite = FechaLimite;
         this.prioridad = prioridad;
     }
-    
-git 
+
+    public task() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public int getId() {
         return id;
     }
@@ -71,12 +73,12 @@ git
         this.responsable = responsable;
     }
 
-    public Date getFechaLimite() {
-        return fechaLimite;
+    public String getFechaLimite() {
+        return FechaLimite;
     }
 
-    public void setFechaLimite(Date fechaLimite) {
-        this.fechaLimite = fechaLimite;
+    public void setFechaLimite(String FechaLimite) {
+        this.FechaLimite = FechaLimite;
     }
 
     public String getPrioridad() {
