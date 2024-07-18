@@ -200,6 +200,7 @@ public class register extends javax.swing.JFrame {
         String correo = txtCorreo.getText();
         String usuario = txtUsuario.getText();
         String contraseña = new String(txtContraseña.getPassword());
+      
 
         user User = new user(dni, nombre_completo, correo, usuario, contraseña);
         ControllerRegister controller = new ControllerRegister();
