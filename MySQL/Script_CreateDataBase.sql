@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS task_manager;
 CREATE DATABASE IF NOT EXISTS task_manager;
 USE task_manager;
 
-CREATE TABLE usuario (
+CREATE TABLE user (
     id INT PRIMARY KEY AUTO_INCREMENT,
     dni VARCHAR(50) UNIQUE NOT NULL,
     nombre_completo VARCHAR(50) NOT NULL,
@@ -11,13 +11,13 @@ CREATE TABLE usuario (
     contraseña VARCHAR(255) NOT NULL
 );
 
-
-CREATE TABLE tareas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
+CREATE TABLE task (
+    id INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(255),
     descripcion TEXT,
-    estado ENUM('Sin empezar', 'En progreso', 'Terminado') DEFAULT 'Sin empezar',
+    estado ENUM('Sin empezar', 'En proceso', 'Terminado'),
     responsable VARCHAR(255),
     fecha_limite DATE,
-    prioridad ENUM('Baja', 'Media', 'Alta') DEFAULT 'Media'
+    prioridad ENUM('Baja', 'Media', 'Alta'),
+    PRIMARY KEY (id)
 );

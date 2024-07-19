@@ -13,7 +13,7 @@ public class RegisterController {
 
     public boolean registerUser(user user) {
         Connection con = DbConnection.getConnection();
-        String sql = "INSERT INTO usuario(dni, nombre_completo, correo, usuario, contraseña) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user(dni, nombre_completo, correo, usuario, contraseña) VALUES (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);

@@ -4,6 +4,7 @@
  */
 package view;
 
+import controller.TaskController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,12 +14,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import model.DbConnection;
+import view.taskManager;
+import java.sql.ResultSet;
 
 /**
  *
  * @author marin
  */
 public class taskManager extends javax.swing.JFrame {
+   
 
     /**
      * Creates new form taskManager
@@ -44,15 +48,18 @@ public class taskManager extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
-        boxResponsable = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
-        boxPrioridad = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
         btnEliminar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        boxEstado = new javax.swing.JComboBox<>();
+        boxPrioridad = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        boxResponsable = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,13 +78,6 @@ public class taskManager extends javax.swing.JFrame {
 
         jLabel4.setText("Responsable:");
 
-        boxResponsable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        boxResponsable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boxResponsableActionPerformed(evt);
-            }
-        });
-
         jLabel5.setText("Fecha Limite:");
 
         jLabel6.setText("Prioridad:");
@@ -89,9 +89,7 @@ public class taskManager extends javax.swing.JFrame {
             }
         });
 
-        boxPrioridad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -114,20 +112,49 @@ public class taskManager extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tabla);
 
         btnEliminar.setText("Eliminar");
+
+        jLabel7.setText("Estado:");
+
+        boxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin empezar", "En proceso", "Terminado" }));
+        boxEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxEstadoActionPerformed(evt);
+            }
+        });
+
+        boxPrioridad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Baja\t", "Media", "Alta", " " }));
+        boxPrioridad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxPrioridadActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("Tareas");
+
+        boxResponsable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAgregar)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnEliminar)
+                        .addGap(66, 66, 66))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6)
+                            .addComponent(txtFecha)
                             .addComponent(jLabel5)
                             .addComponent(jLabel4)
                             .addComponent(jScrollPane1)
@@ -135,27 +162,28 @@ public class taskManager extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
                             .addComponent(txtNombre)
-                            .addComponent(boxResponsable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtFecha)
-                            .addComponent(boxPrioridad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel7)
+                            .addComponent(boxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(boxPrioridad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(boxResponsable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 963, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(btnAgregar)
-                        .addGap(32, 32, 32)
-                        .addComponent(btnEliminar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 963, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 13, Short.MAX_VALUE)
+                .addGap(13, 13, 13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,22 +193,28 @@ public class taskManager extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(4, 4, 4)
                         .addComponent(boxResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6)
+                        .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(boxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel6)
+                        .addGap(10, 10, 10)
                         .addComponent(boxPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAgregar)
-                            .addComponent(btnEliminar))
-                        .addGap(0, 29, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(btnEliminar)
+                            .addComponent(btnAgregar))
+                        .addGap(20, 20, 20))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -196,8 +230,8 @@ public class taskManager extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -207,7 +241,7 @@ public class taskManager extends javax.swing.JFrame {
         DefaultTableModel tableModel = new DefaultTableModel(
             new Object[]{"ID", "Nombre", "Descripcion", "Estado", "Responsable", "Fecha", "Prioridad"}, 0
         );
-        jTable1.setModel(tableModel);
+        tabla.setModel(tableModel);
     }
 
     private void setupListeners() {
@@ -218,90 +252,98 @@ public class taskManager extends javax.swing.JFrame {
         });
     }
    
-    private void boxResponsableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxResponsableActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_boxResponsableActionPerformed
-
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         String nombre = txtNombre.getText().trim();
+        String descripcion = txtDescripcion.getText().trim();
+        String estado = (String) boxEstado.getSelectedItem();
+        String responsable = txtResponsable.getText().trim();
+        String fecha_limite = txtFecha.getText().trim();
+        String prioridad = (String) boxPrioridad.getSelectedItem();
+        
+        if (!fecha_limite.matches("\\d{4}-\\d{2}-\\d{2}")) {
+        JOptionPane.showMessageDialog(this, "El formato de fecha debe ser YYYY-MM-DD", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+        }
         
         if (!nombre.isEmpty()) {
-            // Agregar el nombre a la tabla
-            model.addRow(new Object[]{null, nombre, null, null, null, null, null});
-            // Limpiar el campo de texto
-            txtNombre.setText("");
+        // Agregar los datos a la base de datos
+        try (Connection conn = DbConnection.getConnection()) {
+            String sql = "INSERT INTO task (nombre, descripcion, estado, responsable, fecha_limite, prioridad) VALUES (?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                pstmt.setString(1, nombre);
+                pstmt.setString(2, descripcion);
+                pstmt.setString(3, estado);
+                pstmt.setString(4, responsable);
+                pstmt.setString(5, fecha_limite);
+                pstmt.setString(6, prioridad);
+                pstmt.executeUpdate();
 
-            // Agregar el nombre a la base de datos
-            try (Connection conn = DbConnection.getConnection()) {
-                String sql = "INSERT INTO tu_tabla (nombre) VALUES (?)";
-                try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                    pstmt.setString(1, nombre);
-                    pstmt.executeUpdate();
-                    JOptionPane.showMessageDialog(this, "Nombre agregado a la base de datos.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                // Obtener el ID generado
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int id = generatedKeys.getInt(1);
+                        // Agregar la fila con el ID a la tabla
+                        model.addRow(new Object[]{id, nombre, descripcion, estado, responsable, fecha_limite, prioridad});
+                        JOptionPane.showMessageDialog(this, "Tarea agregada a la base de datos.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "Error al agregar el nombre a la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "El campo de nombre está vacío", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al agregar la tarea a la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        // Limpiar los campos de texto
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        txtResponsable.setText("");
+        txtFecha.setText("");
+    } else {
+        JOptionPane.showMessageDialog(this, "El campo de nombre está vacío", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void boxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxEstadoActionPerformed
+
+    private void boxPrioridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxPrioridadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxPrioridadActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(taskManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(taskManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(taskManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(taskManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-            
-            }
-        });
+        taskManager v = new taskManager();
+        TaskController tc = new TaskController(v);
+        v.setVisible(true);
+        v.setLocationRelativeTo(v);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> boxEstado;
     private javax.swing.JComboBox<String> boxPrioridad;
     private javax.swing.JComboBox<String> boxResponsable;
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnEliminar;
+    public javax.swing.JButton btnAgregar;
+    public javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea txtDescripcion;
-    private javax.swing.JTextField txtFecha;
-    private javax.swing.JTextField txtNombre;
+    public javax.swing.JTable tabla;
+    public javax.swing.JTextArea txtDescripcion;
+    public javax.swing.JTextField txtFecha;
+    public javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
     public JButton getBtnAgregar() {
@@ -313,9 +355,7 @@ public class taskManager extends javax.swing.JFrame {
     }
 
     public JTable getJTable1() {
-        return jTable1;
+        return tabla;
     }
 
-   
- 
 }

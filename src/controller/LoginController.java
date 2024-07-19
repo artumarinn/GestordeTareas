@@ -21,7 +21,7 @@ public class LoginController {
     
     public boolean loginUser(String usuario, String contraseña) {
         Connection con = DbConnection.getConnection();
-        String sql = "SELECT * FROM usuario WHERE usuario = ? AND contraseña = ?";
+        String sql = "SELECT * FROM user WHERE usuario = ? AND contraseña = ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);

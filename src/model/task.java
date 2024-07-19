@@ -19,7 +19,7 @@ public class task {
     private String FechaLimite;
     private String prioridad;
 
-    public task(int id, String nombre) {
+    public task(int id, String nombre, String descripcion, String estado, String responsable, String FechaLimite, String prioridad) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -28,11 +28,11 @@ public class task {
         this.FechaLimite = FechaLimite;
         this.prioridad = prioridad;
     }
-
-    public task() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public task(){
+        
     }
-
+    
     public int getId() {
         return id;
     }

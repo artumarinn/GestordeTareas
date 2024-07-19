@@ -6,59 +6,50 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import java.util.List;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import model.DbConnection;
+import model.TaskDAO;
 import model.task;
 import view.taskManager;
+
 /**
  *
  * @author marin
  */
-
-public class TaskController {
-    private task model;
-    private taskManager view;
-
-    public TaskController(task model, taskManager view) {
-        this.model = model;
-        this.view = view;
-        initController();
+public class TaskController implements ActionListener {
+    
+    TaskDAO dao = new TaskDAO();
+    task t = new task();
+    taskManager vista = new taskManager();
+    DefaultTableModel modelo = new DefaultTableModel();
+    
+    public TaskController(taskManager v) {
+        this.vista = vista;
+        this.vista.btnListar.addActionListener(this);
     }
 
-    private void initController() {
-        view.getBtnAgregar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                agregarTask();
-            }
-        });
-    }
-
-    private void agregarTask() {
-        String nombre = view.getTxtNombre().getText().trim();
-
-        if (!nombre.isEmpty()) {
-            DefaultTableModel tableModel = (DefaultTableModel) view.getJTable1().getModel();
-            tableModel.addRow(new Object[]{null, nombre});
-            view.getTxtNombre().setText("");
-
-            try (Connection conn = DbConnection.getConnection()) {
-                String sql = "INSERT INTO tareas (nombre) VALUES (?)";
-                try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                    pstmt.setString(1, nombre);
-                    pstmt.executeUpdate();
-                    JOptionPane.showMessageDialog(view, "Nombre agregado a la base de datos.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(view, "Error al agregar el nombre a la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(view, "El campo de nombre está vacío", "Error", JOptionPane.ERROR_MESSAGE);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==vista.btnListar) {
+            listar(vista.tabla);
         }
     }
+    
+    public void listar(JTable tabla) {
+        modelo=(DefaultTableModel)tabla.getModel();    
+        List<task>lista=dao.listar();
+        Object[]object=new Object[7];
+        for (int i = 0; i < lista.size(); i++) {
+            object[0]=lista.get(i).getId();
+            object[1]=lista.get(i).getNombre();
+            object[2]=lista.get(i).getDescripcion();
+            object[3]=lista.get(i).getEstado();
+            object[4]=lista.get(i).getResponsable();
+            object[5]=lista.get(i).getFechaLimite();
+            object[6]=lista.get(i).getPrioridad();
+            modelo.addRow(object);
+        }
+        vista.tabla.setModel(modelo);
+    }
 }
-
