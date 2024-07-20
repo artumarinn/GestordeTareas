@@ -37,6 +37,7 @@ public class taskManager extends javax.swing.JFrame {
         fillResponsableComboBox();
         setupTableModel();
         setupTableModelListener();
+        setupTableModelListener();
     }
     
     private void fillResponsableComboBox() {
@@ -163,6 +164,11 @@ public class taskManager extends javax.swing.JFrame {
         jLabel8.setText("Tareas");
 
         btnListar.setText("Listar");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -405,7 +411,40 @@ public class taskManager extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(this, "Selecciona una tarea para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        // TODO add your handling code here:
+        listarTareas();
+    }//GEN-LAST:event_btnListarActionPerformed
     
+    private void listarTareas() {
+    DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+    // Limpia la tabla antes de listar
+    model.setRowCount(0);
+
+    String sql = "SELECT id, nombre, descripcion, estado, responsable, fecha_limite, prioridad FROM task";
+
+    try (Connection conn = DbConnection.getConnection(); 
+         PreparedStatement pstmt = conn.prepareStatement(sql); 
+         ResultSet rs = pstmt.executeQuery()) {
+
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String nombre = rs.getString("nombre");
+            String descripcion = rs.getString("descripcion");
+            String estado = rs.getString("estado");
+            String responsable = rs.getString("responsable");
+            String fecha_limite = rs.getString("fecha_limite");
+            String prioridad = rs.getString("prioridad");
+
+            // Agrega cada fila al modelo
+            model.addRow(new Object[]{id, nombre, descripcion, estado, responsable, fecha_limite, prioridad});
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al obtener las tareas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
     private void deleteFromDatabase(int id) {
         String sql = "DELETE FROM task WHERE id = ?";
         try (Connection conn = DbConnection.getConnection();
