@@ -11,14 +11,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import model.DbConnection;
 
 
@@ -38,6 +41,7 @@ public class taskManager extends javax.swing.JFrame {
         setupTableModel();
         setupTableModelListener();
         setupTableModelListener();
+        setupEstadoColumnEditor();
     }
     
     private void fillResponsableComboBox() {
@@ -278,6 +282,18 @@ public class taskManager extends javax.swing.JFrame {
             }
         };
         tabla.setModel(model);
+    }
+    private JComboBox<String> createEstadoComboBox() {
+        JComboBox<String> comboBox = new JComboBox<>();
+        comboBox.addItem("Sin empezar");
+        comboBox.addItem("En proceso");
+        comboBox.addItem("Terminado");
+        return comboBox;
+    }
+
+    private void setupEstadoColumnEditor() {
+        TableColumn estadoColumn = tabla.getColumnModel().getColumn(3); // Asumiendo que la columna "Estado" es la cuarta columna (índice 3)
+        estadoColumn.setCellEditor(new DefaultCellEditor(createEstadoComboBox()));
     }
 
     private void setupTableModelListener() {
