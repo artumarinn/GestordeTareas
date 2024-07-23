@@ -6,7 +6,8 @@
             <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/view/login.java</file>
             <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/view/taskManager.java</file>
             <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/view/register.java</file>
-            <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/dao/TaskDAO.java</file>
+            <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/model/task.java</file>
+            <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/model/TaskDAO.java</file>
         </group>
     </open-files>
 </project-private>

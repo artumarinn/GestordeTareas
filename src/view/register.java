@@ -20,6 +20,7 @@ public class register extends javax.swing.JFrame {
      */
     public register() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -45,6 +46,7 @@ public class register extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         txtContraseña = new javax.swing.JPasswordField();
+        btnVentanaLogin = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -108,6 +110,13 @@ public class register extends javax.swing.JFrame {
             }
         });
 
+        btnVentanaLogin.setText("Login");
+        btnVentanaLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentanaLoginActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -115,25 +124,31 @@ public class register extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(txtDni)
-                            .addComponent(jLabel4)
-                            .addComponent(txtNombrecompleto)
-                            .addComponent(jLabel5)
-                            .addComponent(txtCorreo)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(txtUsuario)
-                            .addComponent(txtContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(btnAddUser)))
-                .addContainerGap(66, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(74, 74, 74)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3)
+                                    .addComponent(txtDni)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txtNombrecompleto)
+                                    .addComponent(jLabel5)
+                                    .addComponent(txtCorreo)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtUsuario)
+                                    .addComponent(txtContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(104, 104, 104)
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(116, 116, 116)
+                                .addComponent(btnAddUser)))
+                        .addGap(0, 69, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnVentanaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +177,9 @@ public class register extends javax.swing.JFrame {
                 .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAddUser)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(btnVentanaLogin)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -173,10 +190,7 @@ public class register extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -207,7 +221,9 @@ public class register extends javax.swing.JFrame {
     
         if (controller.registerUser(User)) {
             JOptionPane.showMessageDialog(this, "Usuario registrado con éxito");
-            this.dispose();
+            login vlogin = new login();
+            vlogin.setVisible(true);
+            this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Error al registrar el usuario");
         }
@@ -224,6 +240,12 @@ public class register extends javax.swing.JFrame {
     private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtContraseñaActionPerformed
+
+    private void btnVentanaLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaLoginActionPerformed
+            login vlogin = new login();
+            vlogin.setVisible(true);
+            this.setVisible(false);
+    }//GEN-LAST:event_btnVentanaLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,6 +284,7 @@ public class register extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddUser;
+    private javax.swing.JButton btnVentanaLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -276,4 +299,6 @@ public class register extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombrecompleto;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+
 }

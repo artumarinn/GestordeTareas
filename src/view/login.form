@@ -61,6 +61,10 @@
                           <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnVentanaRegistro" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace pref="68" max="32767" attributes="0"/>
               </Group>
@@ -81,7 +85,9 @@
                   <Component id="txtContraseña" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="76" max="32767" attributes="0"/>
+                  <EmptySpace pref="46" max="32767" attributes="0"/>
+                  <Component id="btnVentanaRegistro" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -116,6 +122,14 @@
           </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtContrase&#xf1;a">
+        </Component>
+        <Component class="javax.swing.JButton" name="btnVentanaRegistro">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Registro"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVentanaRegistroActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

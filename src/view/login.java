@@ -19,6 +19,7 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -37,6 +38,7 @@ public class login extends javax.swing.JFrame {
         txtUsuario = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         txtContraseña = new javax.swing.JPasswordField();
+        btnVentanaRegistro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,6 +53,13 @@ public class login extends javax.swing.JFrame {
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
+            }
+        });
+
+        btnVentanaRegistro.setText("Registro");
+        btnVentanaRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentanaRegistroActionPerformed(evt);
             }
         });
 
@@ -72,7 +81,10 @@ public class login extends javax.swing.JFrame {
                         .addComponent(btnLogin))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(84, 84, 84)
-                        .addComponent(jLabel2)))
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnVentanaRegistro)))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -90,7 +102,9 @@ public class login extends javax.swing.JFrame {
                 .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(btnLogin)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(btnVentanaRegistro)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -118,13 +132,19 @@ public class login extends javax.swing.JFrame {
         LoginController loginController = new LoginController();
         if (loginController.loginUser(usuario, contraseña)) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
-            // Navegar a la pantalla del gestor de tareas
-            this.dispose(); 
-            new login().setVisible(true);
+            taskManager vtask = new taskManager();
+            vtask.setVisible(true);
+            this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnVentanaRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaRegistroActionPerformed
+            register vregister = new register();
+            vregister.setVisible(true);
+            this.setVisible(false);
+    }//GEN-LAST:event_btnVentanaRegistroActionPerformed
 
     
     /**
@@ -164,6 +184,7 @@ public class login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnVentanaRegistro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
