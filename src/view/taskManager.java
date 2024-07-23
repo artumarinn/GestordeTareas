@@ -24,6 +24,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import model.DbConnection;
 
+import model.task;
+import dao.TaskDAO;
+
 
 /**
  *
@@ -386,46 +389,49 @@ public class taskManager extends javax.swing.JFrame {
    
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
          DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-        String nombre = txtNombre.getText().trim();
-        String descripcion = txtDescripcion.getText().trim();
-        String estado = (String) boxEstado.getSelectedItem();
-        String responsable = (String) boxResponsable.getSelectedItem();
-        String fecha_limite = txtFecha.getText().trim();
-        String prioridad = (String) boxPrioridad.getSelectedItem();
+    String nombre = txtNombre.getText().trim();
+    String descripcion = txtDescripcion.getText().trim();
+    String estado = (String) boxEstado.getSelectedItem();
+    String responsable = (String) boxResponsable.getSelectedItem();
+    String fecha_limite = txtFecha.getText().trim();
+    String prioridad = (String) boxPrioridad.getSelectedItem();
 
-        if (!fecha_limite.matches("\\d{4}-\\d{2}-\\d{2}")) {
-            JOptionPane.showMessageDialog(this, "El formato de fecha debe ser YYYY-MM-DD", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (!fecha_limite.matches("\\d{4}-\\d{2}-\\d{2}")) {
+        JOptionPane.showMessageDialog(this, "El formato de fecha debe ser YYYY-MM-DD", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (!nombre.isEmpty()) {
+    if (!nombre.isEmpty()) {
+        try {
+            
+            task t= new task(nombre, descripcion, estado, responsable, fecha_limite, prioridad);
+            
+            // Crear una instancia de TaskDAO y agregar la tarea
+            TaskDAO taskDAO = new TaskDAO();
+            taskDAO.addTask(t);
+
+            // Opcional: Obtener el ID de la tarea recién insertada
             try (Connection conn = DbConnection.getConnection()) {
-                String sql = "INSERT INTO task (nombre, descripcion, estado, responsable, fecha_limite, prioridad) VALUES (?, ?, ?, ?, ?, ?)";
-                try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                    pstmt.setString(1, nombre);
-                    pstmt.setString(2, descripcion);
-                    pstmt.setString(3, estado);
-                    pstmt.setString(4, responsable);
-                    pstmt.setString(5, fecha_limite);
-                    pstmt.setString(6, prioridad);
-                    pstmt.executeUpdate();
-
-                    try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-                        if (generatedKeys.next()) {
-                            int id = generatedKeys.getInt(1);
-                            model.addRow(new Object[]{id, nombre, descripcion, estado, responsable, fecha_limite, prioridad});
-                        } else {
-                            throw new SQLException("No se pudo obtener el ID.");
-                        }
+                String sql = "SELECT LAST_INSERT_ID()";
+                try (PreparedStatement pstmt = conn.prepareStatement(sql);
+                     ResultSet generatedKeys = pstmt.executeQuery()) {
+                    if (generatedKeys.next()) {
+                        int id = generatedKeys.getInt(1);
+                        model.addRow(new Object[]{id, nombre, descripcion, estado, responsable, fecha_limite, prioridad});
+                    } else {
+                        throw new SQLException("No se pudo obtener el ID.");
                     }
-                    JOptionPane.showMessageDialog(this, "Tarea agregada a la base de datos.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "Error al agregar la tarea a la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "El campo de nombre está vacío", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Tarea agregada a la base de datos.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al agregar la tarea a la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    } else {
+        JOptionPane.showMessageDialog(this, "El campo de nombre está vacío", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+        
 
     }//GEN-LAST:event_btnAgregarActionPerformed
     

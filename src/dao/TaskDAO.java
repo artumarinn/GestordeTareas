@@ -21,8 +21,36 @@ import model.DbConnection;
 
 public class TaskDAO {
     
+    DbConnection conectar = new DbConnection();
+    Connection con;
+    PreparedStatement ps;
+    ResultSet rs;
+    
+    public List listar(){
+        List<task>datos=new ArrayList<>();
+        String sql="select * from task";
+        try{
+            con=conectar.getConnection();
+            ps=con.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while (rs.next()) {
+                task t = new task();
+                t.setId(rs.getInt(1));
+                t.setNombre(rs.getString(2));
+                t.setDescripcion(rs.getString(3));
+                t.setEstado(rs.getString(4));
+                t.setResponsable(rs.getString(5));
+                t.setFechaLimite(rs.getString(6));
+                t.setPrioridad(rs.getString(7));
+                datos.add(t);    
+            }
+        } catch (Exception e) {
+        }
+    return datos;
+    }
+    
     public void addTask(task Task) {
-        String sql = "INSERT INTO tareas (nombre, descripcion, estado, responsable, fecha_limite, prioridad) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO task (nombre, descripcion, estado, responsable, fecha_limite, prioridad) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DbConnection.getConnection(); 
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, Task.getNombre());

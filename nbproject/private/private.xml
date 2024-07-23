@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/view/login.java</file>
+            <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/model/DbConnection.java</file>
             <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/view/taskManager.java</file>
+            <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/dao/TaskDAO.java</file>
             <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/view/register.java</file>
-            <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/model/task.java</file>
-            <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/model/TaskDAO.java</file>
+            <file>file:/C:/xampp/htdocs/UCH/PROGRAMACION-III/Task-Manager/src/controller/TaskController.java</file>
         </group>
     </open-files>
 </project-private>

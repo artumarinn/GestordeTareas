@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import model.TaskDAO;
+import dao.TaskDAO;
 import model.task;
 import view.taskManager;
 

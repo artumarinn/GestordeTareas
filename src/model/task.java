@@ -19,8 +19,7 @@ public class task {
     private String FechaLimite;
     private String prioridad;
 
-    public task(int id, String nombre, String descripcion, String estado, String responsable, String FechaLimite, String prioridad) {
-        this.id = id;
+    public task(String nombre, String descripcion, String estado, String responsable, String FechaLimite, String prioridad) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.estado = estado;
